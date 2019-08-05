@@ -1,5 +1,8 @@
 #!/usr/local/bin/node
 
+// query the azure env to find out how many items are in the queue
+//
+// the queue name is passed on the command line
 const dotenv = require('dotenv').config()
 
 const {
