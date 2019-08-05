@@ -1,0 +1,17 @@
+{
+  "name": "r-to-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "add_a_little.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@azure/storage-queue": "^10.2.0",
+    "azure-storage": "^2.10.3",
+    "dotenv": "^8.0.0"
+  }
+}
