@@ -1,5 +1,9 @@
 #!/usr/local/bin/node
 
+//
+// given a azure queue on the cmd line, we turn that string into an azure reference
+// and get / delete every message in the queue
+//
 const dotenv = require('dotenv').config()
 
 const {
@@ -11,41 +15,41 @@ const {
     SharedKeyCredential,
 } = require("@azure/storage-queue"); // Change to "@azure/storage-queue" in your package
 
+//
+// this is an older javascript lib for connecting to Azure, but this is what the Azure
+// web examples are written in
+//
 Storage = require('azure-storage')
+let urlLinks = []
 //
 // function starts here!
 //
-if (process.argv.length < 5) {
-    console.error('usage: func queue-name userid searchstring')
+if (process.argv.length < 2) {
+    console.error("usage: func ")
     return -1
 }
-main(process.argv[2], process.argv[3], process.argv[4])
-    .then( () => {
-
+main()
+    .then(() => {
+        
     })
     .catch(err => {
         console.error(err)
     })
 
-async function main(queueName, userid, searchString) {
-    
+async function main() {
+
     // Enter your storage account name and shared key
+    // in the environment
     const account = process.env.STORAGE_ACCT_NAME
     const accountKey = process.env.STORAGE_ACCT_KEY
 
     const queueSvc = Storage.createQueueService(account, accountKey)
-    let searchInfo = {}
-    searchInfo.userid = userid
-    searchInfo.searchstring = searchString
-    let messageObject = Buffer.from(JSON.stringify(searchInfo)).toString('base64')
-    console.log(searchInfo)
-    queueSvc.createMessage(queueName, messageObject, (error, results, response) => {
-        if ( !error ) {
-            console.log("message enqueued: ", searchInfo)
+    queueSvc.listQueuesSegmented(null, function(error, results, response){
+        if(!error){
+          console.log(results)
         }
-    })
+      });
 
-    
 
 
 }
