@@ -1,7 +1,7 @@
 
 var request = require('request');
 var rp = require('request-promise')
-var $ = require('cheerio')
+var cheerio = require('cheerio')
 
 let ss= { "userid": 41, "searchstring": "US" }
 const account = process.env.STORAGE_ACCT_NAME;
@@ -58,13 +58,39 @@ async function doMyCode(myQueueItem) {
     // await 
     await rp(URL)
         .then(html => {
-            // context.log("called google -- here is output-->", html.substring(1, 50))
+            console.log("called google -- here is output-->", html.substring(0, 50))
             //
             // take the google data and break it down
             //
             // adding each href to a list
-            $('.jfp3ef', html).each((index, value) => {
-                console.log("--->in the parser")
+            var $ = cheerio.load(html)
+            var r = $('a').each(function() {
+                var a = ($(this).attr('href')).split('&')[0]
+                var b = a.split("q=")
+                if ( (b[1]) && (b[1].startsWith('http') )) {
+                    console.log(' -->', b[1])
+                }
+                
+            })
+            
+                
+            
+            
+            // var fsearch = pHTML.find('.search')
+            
+           
+
+            // // now take those hrefs and blob 'em and queue 'em
+            // console.log("urllinks -->", urlLinks.length)
+        })
+        .catch(error => {
+            console.log("error-->", error)
+        })
+    }
+
+    /*
+
+    console.log("--->in the parser", value)
                 var link = $(value).children().attr('href')
                 if (typeof (link) === 'string') {
                     var it = link.split('/url?q=')[1]
@@ -74,13 +100,9 @@ async function doMyCode(myQueueItem) {
                     urlLinks.push(it)
                 }
 
+                 $('.med', html).each((index, value) => {
+                
+
                 // context.bindings.outputblob = html
             })
-
-            // now take those hrefs and blob 'em and queue 'em
-            console.log("urllinks -->", urlLinks.length)
-        })
-        .catch(error => {
-            console.log("error-->", error)
-        })
-    }
+                */
