@@ -17,5 +17,9 @@
     "dotenv": "^8.0.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.4"
-  }
+  },
+  "bundledDependencies": 
+  [
+    "@azure/storage-blob", "@azure/storage-queue", "azure-storage", "cheerio", "dotenv", "request", "request-promise"
+  ]
 }
