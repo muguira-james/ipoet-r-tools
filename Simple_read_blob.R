@@ -6,7 +6,7 @@ account_name_env <- Sys.getenv("STORAGE_ACCT_NAME")
 account_key <- Sys.getenv("STORAGE_ACCOUNT_KEY")
 
 account_name <- paste0("https://", account_name_env, ".blob.core.windows.net")
-account_key <- paste0()
+# account_key <- paste0()
 
 print(c("storage account name = ", account_name, "storage key = ", account_key))
 #
@@ -18,10 +18,11 @@ store <- list_storage_containers(bl_endp_key)
 
 #
 # to get the files that are queued
-system2("./number-of-items-in-queue.js", args="ipoet-41-queue")
+system2("./number-of-items-in-queue.js", args="ipoet-45-queue")
 #
 # to gather all the queued items and figure out which are good or not
-dd <- system2("./drain-queue.js", args="ipoet-41-queue", stdout=TRUE)
+dd <- system2("./drain-queue.js", args="ipoet-45-queue", stdout=TRUE)
+print(dd)
 #
 # outblobq is a blob contain I have setup in jam-que-rg
 cont <- storage_container(bl_endp_key, "search-41-container")
