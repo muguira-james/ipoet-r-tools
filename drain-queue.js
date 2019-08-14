@@ -40,10 +40,9 @@ async function main(queueName) {
 
     // Enter your storage account name and shared key
     // in the environment
-    const account = process.env.STORAGE_ACCT_NAME
-    const accountKey = process.env.STORAGE_ACCT_KEY
+    const accountConnectionString = process.env.STORAGE_CONN_STRING
 
-    const queueSvc = Storage.createQueueService(account, accountKey)
+    const queueSvc = Storage.createQueueService(accountConnectionString)
     queueSvc.getQueueMetadata(queueName, async function (error, metaData) {
         if (metaData) {
             // console.log(metaData.approximateMessageCount)

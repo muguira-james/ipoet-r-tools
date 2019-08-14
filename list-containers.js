@@ -28,11 +28,12 @@ main()
 async function main() {
     
     // Enter your storage account name and shared key
-    const account = process.env.STORAGE_ACCT_NAME
-    const accountKey = process.env.STORAGE_ACCT_KEY
+    // const account = process.env.STORAGE_ACCT_NAME
+    // const accountKey = process.env.STORAGE_ACCT_KEY
+    const accountConnectionString = process.env.STORAGE_CONN_STRING
 
-
-    blobService = Storage.createBlobService(account, accountKey)
+    // blobService = Storage.createBlobService(account, accountKey)
+    blobService = Storage.createBlobService(accountConnectionString)
     let c = await listContainers()
     console.log(c)
 }

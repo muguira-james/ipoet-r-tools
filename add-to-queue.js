@@ -35,10 +35,9 @@ main(process.argv[2], process.argv[3], process.argv[4], number2retrieve)
 async function main(queueName, userid, searchString, number2retrieve) {
     
     // Enter your storage account name and shared key
-    const account = process.env.STORAGE_ACCT_NAME
-    const accountKey = process.env.STORAGE_ACCT_KEY
+    const accountConnectionString = process.env.STORAGE_CONN_STRING
 
-    const queueSvc = Storage.createQueueService(account, accountKey)
+    const queueSvc = Storage.createQueueService(accountConnectionString)
 
     let searchInfo = {}
     searchInfo.userid = userid

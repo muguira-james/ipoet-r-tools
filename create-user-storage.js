@@ -34,34 +34,24 @@ main(process.argv[2])
 
 async function main(userid) {
     
-    // Enter your storage account name and shared key
-    const account = process.env.STORAGE_ACCT_NAME
-    const accountKey = process.env.STORAGE_ACCT_KEY
+   // Enter your storage account name and shared key
+   const accountConnectionString = process.env.STORAGE_CONN_STRING
 
-    // Use SharedKeyCredential with storage account and account key
-    const sharedKeyCredential = new SharedKeyCredential(account, accountKey);
+   const queueSvc = Storage.createQueueService(accountConnectionString)
 
-    // Use sharedKeyCredential, tokenCredential or anonymousCredential to create a pipeline
-    const pipeline = StorageURL.newPipeline(sharedKeyCredential);
-
-    const serviceQueueURL = new ServiceURL(
-        `https://${account}.queue.core.windows.net`,
-        pipeline
-    );
-
-    // linking to an existing queue
-    
 
     const queueName = `ipoet-${userid}-queue`;
     console.log(`creating queue: ${queueName}`)
-    const queueURL = QueueURL.fromServiceURL(serviceQueueURL, queueName);
-    const createQueueResponse = queueURL.create(Aborter.none);
-    console.log(
-        `Create queue ${queueName} successfully`
-    );
+    queueSvc.createQueueIfNotExists(queueName, (err, results, resp) => {
+        if (err) {
+            console.log(`Queue create failed: ${queueName}`, err)
+        } else {
+            console.log(`Queue created or already exists: ${queueName}`)
+        }
+    })
 
 
-    blobService = Storage.createBlobService(account, accountKey)
+    blobService = Storage.createBlobService(accountConnectionString)
     // linking to an existing container
     
 
