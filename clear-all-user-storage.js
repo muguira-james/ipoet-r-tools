@@ -1,4 +1,4 @@
-#!/usr/bin/node
+#!/usr/local/bin/node
 
 const dotenv = require('dotenv').config()
 
@@ -41,6 +41,15 @@ async function main(userid) {
     queueSvc.deleteQueue(queueName, async function(err, response) {
         if ( !err) {
             console.log(`Queue ${queueName} has been deleted`)
+        }
+    })
+    
+
+    let queueFinishName = `ipoet-${userid}-search-queue`
+    // console.log("deleting queue = ", queueName)
+    queueSvc.deleteQueue(queueFinishName, async function(err, response) {
+        if ( !err) {
+            console.log(`Queue ${queueFinishName} has been deleted`)
         }
     })
     

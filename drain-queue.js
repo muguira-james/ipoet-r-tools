@@ -1,4 +1,4 @@
-#!/usr/bin/node
+#!/usr/local/bin/node
 
 //
 // given a azure queue on the cmd line, we turn that string into an azure reference

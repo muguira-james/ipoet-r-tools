@@ -1,14 +1,7 @@
-#!/usr/bin/node
+#!/usr/local/bin/node
 
 const dotenv = require('dotenv').config()
 
-const {
-    Aborter,
-    ServiceURL,
-    StorageURL,
-    QueueURL,
-    SharedKeyCredential,
-} = require("@azure/storage-queue"); // Change to "@azure/storage-queue" in your package
 
 Storage = require('azure-storage')
 var blobService 
@@ -50,6 +43,15 @@ async function main(userid) {
         }
     })
 
+    const queueFinishName = `ipoet-${userid}-search-queue`;
+    console.log(`creating queue: ${queueFinishName}`)
+    queueSvc.createQueueIfNotExists(queueFinishName, (err, results, resp) => {
+        if (err) {
+            console.log(`Queue create failed: ${queueFinishName}`, err)
+        } else {
+            console.log(`Queue created or already exists: ${queueFinishName}`)
+        }
+    })
 
     blobService = Storage.createBlobService(accountConnectionString)
     // linking to an existing container
