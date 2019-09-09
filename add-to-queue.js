@@ -2,15 +2,6 @@
 
 const dotenv = require('dotenv').config()
 
-const {
-    Aborter,
-    QueueURL,
-    MessagesURL,
-    ServiceURL,
-    StorageURL,
-    SharedKeyCredential,
-} = require("@azure/storage-queue"); // Change to "@azure/storage-queue" in your package
-
 Storage = require('azure-storage')
 
 let number2retrieve = 20
@@ -51,7 +42,12 @@ async function main(queueName, userid, searchString, number2retrieve) {
             console.log(`QueueName: ${queueName} : message enqueued: ${searchInfo} number 2 return: ${searchInfo.number2retrieve}`)
         }
     })
-
+    const frontDoor = 'ipoet-door-bell'
+    queueSvc.createMessage(frontDoor, messageObject, (error, results, response) => {
+        if ( !error ) {
+            console.log(`QueueName: ${queueName} : message enqueued: ${searchInfo} number 2 return: ${searchInfo.number2retrieve}`)
+        }
+    })
     
 
 
