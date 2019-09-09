@@ -6,14 +6,14 @@
 //
 const dotenv = require('dotenv').config()
 
-const {
-    Aborter,
-    QueueURL,
-    MessagesURL,
-    ServiceURL,
-    StorageURL,
-    SharedKeyCredential,
-} = require("@azure/storage-queue"); // Change to "@azure/storage-queue" in your package
+// const {
+//     Aborter,
+//     QueueURL,
+//     MessagesURL,
+//     ServiceURL,
+//     StorageURL,
+//     SharedKeyCredential,
+// } = require("@azure/storage-queue"); // Change to "@azure/storage-queue" in your package
 
 //
 // this is an older javascript lib for connecting to Azure, but this is what the Azure

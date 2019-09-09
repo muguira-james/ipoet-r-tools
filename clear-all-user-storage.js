@@ -2,15 +2,9 @@
 
 const dotenv = require('dotenv').config()
 
-const {
-    Aborter,
-    ServiceURL,
-    StorageURL,
-    SharedKeyCredential,
-} = require("@azure/storage-queue"); // Change to "@azure/storage-queue" in your package
 
 Storage = require('azure-storage')
-const { ContainerURL } = require('@azure/storage-blob')
+
 
 //
 // function starts here!
@@ -45,7 +39,7 @@ async function main(userid) {
     })
     
 
-    let queueFinishName = `ipoet-${userid}-search-queue`
+    let queueFinishName = `ipoet-${userid}-finish-queue`
     // console.log("deleting queue = ", queueName)
     queueSvc.deleteQueue(queueFinishName, async function(err, response) {
         if ( !err) {

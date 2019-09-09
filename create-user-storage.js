@@ -43,7 +43,7 @@ async function main(userid) {
         }
     })
 
-    const queueFinishName = `ipoet-${userid}-search-queue`;
+    const queueFinishName = `ipoet-${userid}-finish-queue`;
     console.log(`creating queue: ${queueFinishName}`)
     queueSvc.createQueueIfNotExists(queueFinishName, (err, results, resp) => {
         if (err) {

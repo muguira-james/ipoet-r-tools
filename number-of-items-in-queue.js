@@ -5,14 +5,14 @@
 // the queue name is passed on the command line
 const dotenv = require('dotenv').config()
 
-const {
-    Aborter,
-    QueueURL,
-    MessagesURL,
-    ServiceURL,
-    StorageURL,
-    SharedKeyCredential,
-} = require("@azure/storage-queue"); // Change to "@azure/storage-queue" in your package
+// const {
+//     Aborter,
+//     QueueURL,
+//     MessagesURL,
+//     ServiceURL,
+//     StorageURL,
+//     SharedKeyCredential,
+// } = require("@azure/storage-queue"); // Change to "@azure/storage-queue" in your package
 
 Storage = require('azure-storage')
 //
