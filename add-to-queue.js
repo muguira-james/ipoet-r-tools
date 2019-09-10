@@ -42,7 +42,7 @@ async function main(queueName, userid, searchString, number2retrieve) {
             console.log(`QueueName: ${queueName} : message enqueued: ${searchInfo} number 2 return: ${searchInfo.number2retrieve}`)
         }
     })
-    const frontDoor = 'ipoet-door-bell'
+    const frontDoor = 'front-door-ipoet'
     queueSvc.createMessage(frontDoor, messageObject, (error, results, response) => {
         if ( !error ) {
             console.log(`QueueName: ${queueName} : message enqueued: ${searchInfo} number 2 return: ${searchInfo.number2retrieve}`)

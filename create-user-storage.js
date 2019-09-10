@@ -32,7 +32,7 @@ async function main(userid) {
 
    const queueSvc = Storage.createQueueService(accountConnectionString)
 
-
+    // 1st, create the individual output queue
     const queueName = `ipoet-${userid}-queue`;
     console.log(`creating queue: ${queueName}`)
     queueSvc.createQueueIfNotExists(queueName, (err, results, resp) => {
@@ -43,6 +43,7 @@ async function main(userid) {
         }
     })
 
+    // then create the finish queue
     const queueFinishName = `ipoet-${userid}-finish-queue`;
     console.log(`creating queue: ${queueFinishName}`)
     queueSvc.createQueueIfNotExists(queueFinishName, (err, results, resp) => {
