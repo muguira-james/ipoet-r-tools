@@ -53,8 +53,8 @@ for (i in 1:length(dd)){
   print(c("url->", result$url, "blob File->", result$data))
 }
 #
-# outblobq is a blob contain I have setup in jam-que-rg
-cont <- storage_container(bl_endp_key, "advsearch-1-container")
+# search-1-container is pre-setup and contains the downloaded files
+cont <- storage_container(bl_endp_key, "search-1-container")
 rr <- list_storage_files(cont)
 
 setwd("~/code/ross/azure/ipoet-r-tools/misc-files")
@@ -68,19 +68,41 @@ for(j in 1:length(rr$Name)) {
   storage_download(cont, rr$Name[j], fName)
 }
 
-
-# 
 #
-# experimental code - not needed to get blob contents
-#
-# tenant_id <- "48bf86e8-11a2-4b8a-8cb3-68d8be2227f3"
-# app_id <- "fb5f14f1-2417-476e-bfee-493efc5bf261"
-# 
-# password <- "97a4776f-921d-45a1-b9b6-91d431d98d1c"
-# subscription_id <- "d5351d73-3388-4c1f-aea1-cb78a3466165"
-# 
-# az <- az_rm$new(tenant=tenant_id,
-#                 app=app_id,
-#                 password=password)
-# 
+# now let's see how to use advanced front-door
+setwd("~/code/ross/azure/ipoet-r-tools")
+queueName <- "adv-front-door-ipoet"
+outQueueName <- "adv-finish-1-queue"
+userid <- 1
+outBlobContainer <- paste("advsearch-", userid, "-container")
 
+searchstring <- "http://www.google.com/search?q=US%20Sailing"
+ss <- paste(queueName, userid, searchstring, sep=" ")
+print(ss)
+system2("./add-string-queue.js", args=ss)
+#
+# to get the files that are queued
+num <- 0
+repeat {
+  num <- system2("./number-of-items-in-queue.js", args=outQueueName, stdout=TRUE)
+  print(c("num=",num))
+  if (num > 0) {
+    break
+  }
+  
+}
+# advsearch-1-container is pre-setup and contains the downloaded files
+cont <- storage_container(bl_endp_key, "advsearch-1-container")
+rr <- list_storage_files(cont)
+rr
+
+setwd("~/code/ross/azure/ipoet-r-tools/misc-files")
+
+# Get all the blobs
+
+# the params are: container, blob reference, dest dir
+for(j in 1:length(rr$Name)) {
+  fName <- paste0("raw_", j, ".json")
+  print(c(fName, rr$Name[j]))
+  storage_download(cont, rr$Name[j], fName)
+}
