@@ -12,6 +12,14 @@ if (process.argv.length < 5) {
     console.error('usage: func queue-name userid googlestring')
     return -1
 }
+
+//
+// inputs: 
+// argv[0] = node
+// argv[1] = this file name (add-string-queue.js)
+// argv[2] = queueName to add "stuff" to
+// argv[3] = userid
+// argv[4] = the http string: "http://www.google.com/search?start=0&num=10&q=US%20Sailing"
 const queueName = process.argv[2]
 const userid = process.argv[3]
 const googlestring = process.argv[4]
