@@ -34,12 +34,22 @@ async function main(userid) {
 
     // 1st, create the individual output queue
     const queueName = `ipoet-${userid}-queue`;
+    const queueAdvName = `adv-finish-${userid}-queue`
     console.log(`creating queue: ${queueName}`)
     queueSvc.createQueueIfNotExists(queueName, (err, results, resp) => {
         if (err) {
             console.log(`Queue create failed: ${queueName}`, err)
         } else {
             console.log(`Queue created or already exists: ${queueName}`)
+        }
+    })
+
+    // create the queue for raw web search data
+    queueSvc.createQueueIfNotExists(queueAdvName, (err, results, resp) => {
+        if (err) {
+            console.log(`Adv Queue create failed: ${queueName}`, err)
+        } else {
+            console.log(`Adv Queue created or already exists: ${queueName}`)
         }
     })
 
@@ -60,9 +70,13 @@ async function main(userid) {
 
     // Create a blob container reference
     const containerName = `search-${userid}-container`;
-
+    const containerAdvName = `advsearch-${userid}-container`
     const result = await createContainer(containerName)
     console.log("create container status: ", result)
+
+    const result = await createContainer(containerAdvName)
+    console.log("create container status: ", result)
+    
 }
 
 async function createContainer(containerName) {
