@@ -1,4 +1,4 @@
-#!/usr/local/bin/node
+#!/usr/bin/node
 
 const dotenv = require('dotenv').config()
 
@@ -34,7 +34,7 @@ async function main(userid) {
 
     // 1st, create the individual output queue
     const queueName = `ipoet-${userid}-queue`;
-    const queueAdvName = `adv-finish-${userid}-queue`
+    
     console.log(`creating queue: ${queueName}`)
     queueSvc.createQueueIfNotExists(queueName, (err, results, resp) => {
         if (err) {
@@ -44,7 +44,8 @@ async function main(userid) {
         }
     })
 
-    // create the queue for raw web search data
+    const queueAdvName = `adv-finish-${userid}-queue`
+    console.log(`creating Adv queue: ${queueAdvName}`)
     queueSvc.createQueueIfNotExists(queueAdvName, (err, results, resp) => {
         if (err) {
             console.log(`Adv Queue create failed: ${queueName}`, err)
@@ -52,7 +53,6 @@ async function main(userid) {
             console.log(`Adv Queue created or already exists: ${queueName}`)
         }
     })
-
     // then create the finish queue
     const queueFinishName = `ipoet-${userid}-finish-queue`;
     console.log(`creating queue: ${queueFinishName}`)
@@ -70,13 +70,14 @@ async function main(userid) {
 
     // Create a blob container reference
     const containerName = `search-${userid}-container`;
-    const containerAdvName = `advsearch-${userid}-container`
-    const result = await createContainer(containerName)
-    console.log("create container status: ", result)
 
-    const result = await createContainer(containerAdvName)
-    console.log("create container status: ", result)
-    
+    const result1 = await createContainer(containerName)
+    console.log("create container status: ", result1)
+ 
+    const containerAdvName = `advsearch-${userid}-container`
+    const result2 = await createContainer(containerAdvName)
+    console.log("create Adv container status: ", result2)
+ 
 }
 
 async function createContainer(containerName) {

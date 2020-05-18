@@ -47,7 +47,13 @@ async function main(userid) {
         }
     })
     
-
+    const queueAdvName = `adv-finish-${userid}-queue`
+     // console.log("deleting queue = ", queueName)
+     queueSvc.deleteQueue(queueAdvName, async function(err, response) {
+        if ( !err) {
+            console.log(`Queue ${queueAdvName} has been deleted`)
+        }
+    })
      //
     // delete all blobs in container
     //
@@ -64,6 +70,12 @@ async function main(userid) {
             console.log("deleted container: ", containerName)
         }
     })
-    
-
+    const containerAdvName = `advsearch-${userid}-container`
+    await blobService.deleteContainer(containerAdvName, (err) => {
+        if (err) {
+            console.log(`delete of container: ${containerAdvName} failed ${err}`)
+        }else {
+            console.log("deleted container: ", containerAdvName)
+        }
+    })
 }
